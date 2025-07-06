@@ -1,5 +1,7 @@
+import Header from "@/components/Header";
 import HomeComponent from "@/components/pages/Home";
 import { ImpactNumbers, userCategories, whyChooseUsCards } from "@/data/utils";
+import { Fragment } from "react";
 
 async function fetchTestimonials() {
   // This function should fetch testimonials from an API or database
@@ -67,13 +69,16 @@ export default async function Home() {
   const testimonials = await fetchTestimonials();
 
   return (
-    <HomeComponent
-      userCategories={userCategories}
-      impactNumbers={ImpactNumbers}
-      testimonials={testimonials}
-      careerGurus={[]}
-      blogs={[]}
-      whyChooseUsCards={whyChooseUsCards}
-    />
+    <Fragment>
+      <Header />
+      <HomeComponent
+        userCategories={userCategories}
+        impactNumbers={ImpactNumbers}
+        testimonials={testimonials}
+        careerGurus={[]}
+        blogs={[]}
+        whyChooseUsCards={whyChooseUsCards}
+      />
+    </Fragment>
   );
 }
