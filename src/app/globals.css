@@ -1,26 +1,196 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* override */
+input {
+  background-color: white;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+a {
+  color: #4281fd;
+  text-decoration: none !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/*Custom Scrollbar Design*/
+* {
+  scrollbar-width: inherit !important;
+  scrollbar-color: #4281fd #e0e0e0 !important;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #4281fd;
+  color: white;
+}
+
+@theme {
+  --color-buttonhover: #f5f9ff;
+  --color-greentertiary: #00c938;
+  --color-blueprimary: #4281fd;
+  --color-bgcolors: #ecf2ff;
+  --color-azureradience: #1877f2;
+  --color-smallheading: #9f9f9f;
+
+  /* scrollbar vars */
+  --color-scrollbar: #4281fd;
+  --color-scrollbar-track: lightgray;
+
+  /* Optional primary shades */
+  --color-primary-light: #60a5fa;
+  --color-primary: #3b82f6;
+  --color-primary-dark: #1e40af;
+
+  /* background vars */
+  --background-image-gradientbluelightblue: linear-gradient(
+    -90deg,
+    #1400ff,
+    #42aefd,
+    #1400ff
+  );
+  --background-image-gradientblue: linear-gradient(-90deg, #1400ff, #42aefd);
+  --background-image-gradientwhite: linear-gradient(-90deg, #fff, #fff);
+  --background-image-gradientbluetrans: linear-gradient(
+    0deg,
+    #004dff,
+    #ffffff00
+  );
+
+  /* font family */
+  --font-family-opensans: "Open Sans", sans-serif;
+
+  /* screen sizes */
+  --breakpoint-sm: 20rem; /* 320px / 16 */
+  --breakpoint-smm: 32rem; /* 512px / 16 */
+  --breakpoint-md: 48rem; /* 768px / 16 */
+  --breakpoint-lg: 64rem; /* 1024px / 16 */
+  --breakpoint-xl: 80rem; /* 1280px / 16 */
+  --breakpoint-mmd: 47.9375rem; /* 767px / 16 */
+}
+
+@layer components {
+  /* Blog headings */
+  .blog h1 {
+    @apply font-bold lg:text-3xl text-xl;
+  }
+  .blog h2 {
+    @apply font-bold lg:text-2xl text-lg;
+  }
+  .blog h3 {
+    @apply font-bold lg:text-xl text-base;
+  }
+  .blog h4 {
+    @apply font-bold lg:text-base text-sm;
+  }
+  .blog h5 {
+    @apply font-bold text-sm;
+  }
+  .blog h6 {
+    @apply font-bold text-xs;
+  }
+
+  .blog strong {
+    @apply font-bold block;
+  }
+  .blog ul {
+    @apply list-disc px-5;
+  }
+  .blog ol {
+    @apply list-decimal px-5;
+  }
+  .blog li {
+    @apply mb-1;
+  }
+
+  /* MUI-style floating labels */
+  .mui-input input::placeholder {
+    opacity: 0;
+  }
+  .mui-input input {
+    @apply w-full outline-none;
+    box-sizing: border-box;
+  }
+
+  .mui-input label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.3s;
+    pointer-events: none;
+  }
+
+  .mui-input input:focus + label,
+  .mui-input input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 0.8em;
+    line-height: 0.8em;
+    color: var(--color-blueprimary);
+    background: #fff;
+    padding: 7px 0;
+  }
+
+  /* SVG icon color utility */
+  .fill-svg-blueprimary svg {
+    fill: var(--color-blueprimary);
+  }
+
+  /* Gradient button */
+  .gradient-button {
+    @apply hover:text-blueprimary transition-all duration-500 hover:cursor-pointer bg-[length:200%_200%] text-white bg-gradientbluelightblue animate-[getStartedAsBtnBg_15s_ease-in-out_infinite] relative hover:shadow-md hover:before:w-[102%] before:absolute before:rounded-full before:h-[105%] before:bg-white before:w-0 before:top-[-1px] before:left-[-1px] before:transition-all z-[1] before:z-[-1] before:duration-500;
+  }
+
+
+  @keyframes getStartedAsBtnBg {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Scrollbars */
+  .light-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  .light-scrollbar::-webkit-scrollbar {
+    width: 6.9px;
+  }
+  .light-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(211, 211, 211, 0.4);
+    border-radius: 2px;
+  }
+  .light-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(211, 211, 211, 0.4);
+  }
+
+  .no-scrollbar::-webkit-scrollbar,
+  .no-scrollbar::-webkit-scrollbar-track,
+  .no-scrollbar::-webkit-scrollbar-thumb {
+    width: 0 !important;
+    background-color: transparent !important;
+  }
+  .no-scrollbar {
+    scrollbar-width: none !important;
+    scrollbar-color: transparent !important;
+  }
+
+  /* Global link color */
+  a {
+    color: var(--color-blueprimary);
+  }
+}
+
+/* plugins */
+@plugin "daisyui" {
+  themes: light --default;
 }

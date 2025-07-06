@@ -1,0 +1,15 @@
+export const firebase = {
+  // apiKey: 'AIzaSyCe5l2cKBNnHMiEQfeWw_e4RVrn1Wqxnjs',
+  // authDomain: 'careerauth.firebaseapp.com',
+  // databaseURL: 'https://careerauth.firebaseio.com',
+  // projectId: 'careerauth',
+  // storageBucket: '',
+  // messagingSenderId: '866897014050',
+  apiKey: "AIzaSyA3REH6kY7aVilrGmuHpBqOOdX045FItxc",
+  authDomain: "career-naksha.firebaseapp.com",
+  projectId: "career-naksha",
+  storageBucket: "career-naksha.firebasestorage.app",
+  messagingSenderId: "718717788935",
+  appId: "1:718717788935:web:05713690ba5724ab4d9ba2",
+  measurementId: "G-E1BSPWM8J3",
+};

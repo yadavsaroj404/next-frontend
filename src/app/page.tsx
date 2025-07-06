@@ -1,103 +1,79 @@
-import Image from "next/image";
+import HomeComponent from "@/components/pages/Home";
+import { ImpactNumbers, userCategories, whyChooseUsCards } from "@/data/utils";
 
-export default function Home() {
+async function fetchTestimonials() {
+  // This function should fetch testimonials from an API or database
+  return [
+    {
+      _id: "1",
+      tm_detail:
+        "“CareerNaksha’s guidance literally transformed my future—I landed my dream job in tech!”",
+      Image: "https://i.pravatar.cc/48?img=1",
+      tm_name: "Alice Johnson",
+      tm_expertise: "Software Engineer",
+    },
+    {
+      _id: "2",
+      tm_detail:
+        "“The psychometric test opened my eyes to strengths I never knew I had. Highly recommended.”",
+      Image: "https://i.pravatar.cc/48?img=2",
+      tm_name: "Rahul Mehta",
+      tm_expertise: "Data Analyst",
+    },
+    {
+      _id: "3",
+      tm_detail:
+        "“The personalized counselling was spot‑on. I feel confident about my career path now.”",
+      Image: "https://i.pravatar.cc/48?img=3",
+      tm_name: "Maria Garcia",
+      tm_expertise: "Marketing Manager",
+    },
+    {
+      _id: "4",
+      tm_detail:
+        "“Money‑back guarantee gave me the courage to try—and I’m so glad I did!”",
+      Image: "https://i.pravatar.cc/48?img=4",
+      tm_name: "Liam Smith",
+      tm_expertise: "Student",
+    },
+    {
+      _id: "5",
+      tm_detail:
+        "“The V‑Coach is like having a mentor in your pocket. Love the instant support.”",
+      Image: "https://i.pravatar.cc/48?img=5",
+      tm_name: "Sophie Dubois",
+      tm_expertise: "Graphic Designer",
+    },
+  ];
+  // const url = "https://dashboard.careernaksha.com/testimonials";
+
+  // try {
+  //   const response = await fetch(url);
+  //   const data = await response.json();
+
+  //   const testimonials = data.map((testimonial: any) => ({
+  //     image: testimonial.Image,
+  //     link: testimonial.link || "#",
+  //     altText: testimonial.altText || "Testimonial image",
+  //     ...testimonial,
+  //   }));
+  //   return testimonials;
+  // } catch (error) {
+  //   console.error("Error fetching testimonials:", error);
+  //   return [];
+  // }
+}
+export default async function Home() {
+  const testimonials = await fetchTestimonials();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <HomeComponent
+      userCategories={userCategories}
+      impactNumbers={ImpactNumbers}
+      testimonials={testimonials}
+      careerGurus={[]}
+      blogs={[]}
+      whyChooseUsCards={whyChooseUsCards}
+    />
   );
 }

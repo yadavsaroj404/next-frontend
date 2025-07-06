@@ -1,0 +1,2 @@
+RewriteCond %{HTTP_HOST} ^www\.careernaskha\.com$
+RewriteRule ^/?$ "https\:\/\/careernaskha\.com\/" [R=301,L]

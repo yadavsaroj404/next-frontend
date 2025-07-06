@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /login 
+Disallow: /privacy-policy
+Disallow: /blogs/career-counselling-in-vadodara
+Sitemap: https://www.careernaksha.com/sitemap.xml
