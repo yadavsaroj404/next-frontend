@@ -1,7 +1,6 @@
-// components/RequestCallback.tsx
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import TelephoneInput from "./UI/TelephoneInput";
 
 const backendServer = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -55,7 +54,7 @@ export default function RequestCallback() {
 
   return (
     <div className="flex justify-center gap-4 flex-col lg:flex-row">
-      <div className="mui-input relative items-center flex">
+      <div className="relative items-center flex">
         <TelephoneInput
           value={phone}
           onChangeNumber={(value, valid) => {
@@ -65,7 +64,7 @@ export default function RequestCallback() {
         />
       </div>
 
-      <button
+      <button 
         onClick={requestCallback}
         disabled={!isValid}
         className="py-3 px-4 gradient-button rounded-lg before:rounded-lg font-semibold text-center lg:text-left"

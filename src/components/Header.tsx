@@ -1,10 +1,9 @@
-// components/Header.tsx
 "use client";
 
 import { useState, useEffect, Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { showGetStartedAs, hideGetStartedAs } from "@/store/layoutSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 
@@ -22,7 +21,10 @@ const NAV_LINKS: NavLink[] = [
   {
     name: "Psychometric Test",
     subNavLinks: [
-      { name: "Career Test", url: "/formdetails" },
+      {
+        name: "Career Test",
+        url: "https://careernaksha.bhattaraishiva.com.np/formdetails",
+      },
       {
         name: "O*NET Framework",
         url: "https://www.onetonline.org/",
@@ -143,7 +145,6 @@ export default function Header() {
   const dispatch = useAppDispatch();
   const getStartedAsShown = useAppSelector((s) => s.layout.getStartedAsShown);
   const pathname = usePathname();
-  const router = useRouter();
 
   const [loggedIn, setLoggedIn] = useState(false); // replace with real auth
   const [menuOpen, setMenuOpen] = useState(false);
@@ -167,35 +168,53 @@ export default function Header() {
   };
 
   const NavMenu = ({ isMobile }: { isMobile: boolean }) => (
-    <nav className={`${isMobile ? "" : "flex gap-4"}`}>
+    <nav className={`${!isMobile && "flex space-x-4"}`}>
       {NAV_LINKS.map((link, i) => (
-        <div key={i} className="relative">
-          <button
+        <div key={i} className="relative group">
+          <button 
             onClick={() => toggleIndex(i)}
-            className={`flex justify-between w-full ${
-              isMobile ? "py-2 px-4" : "items-center px-4 py-2 rounded-full"
-            } hover:bg-gray-100 transition`}
+            className={`
+            flex items-baseline gap-x-1 justify-between
+            ${isMobile ? "w-full px-4 py-2" : "px-4 py-2"}
+            bg-white rounded-full
+            transition-shadow duration-200 ease-in-out
+            hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300
+          `}
           >
-            <span
-              className={isMobile ? "font-semibold" : "font-medium text-[13px]"}
-            >
+            <span className={`font-medium ${isMobile ? "" : "text-sm"}`}>
               {link.name}
             </span>
-            <span className="ml-2">{openIndex === i ? "−" : "+"}</span>
+            <Image
+              src="/assets/images/homepage/downarrow.svg"
+              alt="Toggle submenu"
+              width={12}
+              height={12}
+              className={`
+              transform transition-transform duration-200
+              ${openIndex === i ? "rotate-180" : ""}
+            `}
+            />
           </button>
+
           {openIndex === i && (
             <ul
-              className={`absolute bg-white shadow-lg rounded-lg mt-2 ${
-                isMobile
-                  ? "relative top-0 left-0 w-full p-2"
-                  : "top-full left-0 p-2 text-xs space-y-1 z-20"
-              }`}
+              className={`
+              absolute z-30 bg-white rounded-lg shadow-lg mt-2 ${
+                isMobile ? "w-full p-4" : "min-w-[12rem] p-2"
+              }
+            `}
             >
               {link.subNavLinks.map((sub, j) => (
                 <li key={j}>
                   <Link
                     href={sub.url}
-                    className="block px-3 py-1 hover:text-blueprimary transition"
+                    target={sub.type === "EXTERNAL_LINK" ? "_blank" : undefined}
+                    className="
+                    block px-4 py-2 rounded-md
+                    text-gray-700 text-sm
+                    hover:bg-blue-50 hover:text-blue-700
+                    transition-colors
+                  "
                   >
                     {sub.name}
                   </Link>
@@ -245,7 +264,7 @@ export default function Header() {
               height={32}
             />
           </Link>
-          <button onClick={() => setMenuOpen((o) => !o)}>
+          <button  onClick={() => setMenuOpen((o) => !o)}>
             <div className="space-y-1">
               <span className="block w-6 h-0.5 bg-black" />
               <span className="block w-6 h-0.5 bg-black" />
@@ -266,7 +285,7 @@ export default function Header() {
               >
                 {loggedIn ? "Dashboard" : "Login"}
               </Link>
-              <button
+              <button 
                 onClick={handleGetStarted}
                 className="px-4 py-2 font-semibold gradient-button rounded-full"
               >
@@ -293,7 +312,7 @@ export default function Header() {
           >
             {loggedIn ? "Dashboard" : "Login"}
           </Link>
-          <button
+          <button 
             onClick={handleGetStarted}
             className="px-5 py-2.5 gradient-button rounded-full"
           >

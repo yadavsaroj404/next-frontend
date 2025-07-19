@@ -72,7 +72,7 @@ const BlogPageCard: React.FC<BlogPageCardProps> = ({ blog }) => {
       </p>
 
       <div className="tw-absolute tw-bottom-4 tw-flex tw-items-center tw-w-full tw-justify-between">
-        <button
+        <button 
           onClick={readBlog}
           className="tw-font-semibold tw-text-BluePrimary hover:tw-scale-105 tw-transition-all"
         >

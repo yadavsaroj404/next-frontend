@@ -1,3 +1,4 @@
+"use client";
 import { defaultFAQ } from "@/data/faq";
 import { FAQ } from "@/interfaces/faqs";
 import Image from "next/image";

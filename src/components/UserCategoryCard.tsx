@@ -80,7 +80,7 @@ export default function UserCategoryCard({
           <div className="h-full flex items-end">
             <div className="w-full justify-center flex py-4">
               <button
-                onClick={handleShowGetStartedAs}
+                // onClick={handleShowGetStartedAs}
                 className="px-3 py-1.5 font-semibold gradient-button rounded-full shadow-sm w-fit text-[0.69rem]"
               >
                 Get Started

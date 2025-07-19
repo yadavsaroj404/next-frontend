@@ -19,3 +19,12 @@ export interface WhyChooseUsCard {
   title: string;
   description: string;
 }
+
+export interface HeroAnimationIcon {
+  _id: string;
+  name: string;
+  alt?: string;
+  title: string;
+  description: string;
+  role: string;
+}

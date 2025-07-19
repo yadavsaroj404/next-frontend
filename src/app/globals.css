@@ -144,7 +144,7 @@ body {
     @apply hover:text-blueprimary transition-all duration-500 hover:cursor-pointer bg-[length:200%_200%] text-white bg-gradientbluelightblue animate-[getStartedAsBtnBg_15s_ease-in-out_infinite] relative hover:shadow-md hover:before:w-[102%] before:absolute before:rounded-full before:h-[105%] before:bg-white before:w-0 before:top-[-1px] before:left-[-1px] before:transition-all z-[1] before:z-[-1] before:duration-500;
   }
 
-
+  /* animations */
   @keyframes getStartedAsBtnBg {
     0% {
       background-position: 0% 50%;
@@ -155,6 +155,51 @@ body {
     100% {
       background-position: 0% 50%;
     }
+  }
+  @keyframes blinkShadow {
+    0% {
+      box-shadow: 0 0 0 rgba(186, 186, 186, 0.7);
+    }
+    50% {
+      box-shadow: 0 0 15px 3px rgba(186, 186, 186, 0.7);
+    }
+    100% {
+      box-shadow: 0 0 0 rgba(66, 129, 253, 0);
+    }
+  }
+  @keyframes fadeSlide {
+    0% {
+      opacity: 0;
+      transform: translateX(15px);
+    }
+    40% {
+      opacity: 0.5;
+      transform: translateX(-15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .animate-fade-slide {
+    animation: fadeSlide 0.6s ease-in-out;
+  }
+
+  /* simple blur-to-sharp + fade in */
+  @keyframes blurFade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  .animate-blur-fade {
+    animation: blurFade 0.4s ease-in-out;
+  }
+
+  .blink-shadow {
+    animation: blinkShadow 0.4s ease-out;
   }
 
   /* Scrollbars */

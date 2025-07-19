@@ -43,7 +43,7 @@ const TelephoneInput: FC<TelephoneInputProps> = ({ onChangeNumber, value }) => {
         }}
         inputProps={{
           className:
-            "w-full py-3 px-3 border-[0.5px] border-smallheading border-opacity-50 rounded-md disabled:text-smallheading h-full",
+            "w-full py-3 px-3 border-[0.5px] border-smallheading border-opacity-50 rounded-md disabled:text-smallheading h-full focus:outline-none",
           placeholder: "Mobile Number",
           "aria-describedby": "callback-help",
           "aria-label": "Mobile Number",

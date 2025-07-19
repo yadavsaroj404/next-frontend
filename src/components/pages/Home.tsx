@@ -1,6 +1,7 @@
 "use client";
 import { CounsellorInSearchResults } from "@/interfaces/Counsellor";
 import {
+  HeroAnimationIcon,
   ImpactNumber,
   UserCategory,
   WhyChooseUsCard,
@@ -23,6 +24,7 @@ type Props = {
   careerGurus: CounsellorInSearchResults[];
   blogs: any[];
   whyChooseUsCards: WhyChooseUsCard[];
+  heroAnimationIcons: HeroAnimationIcon[];
 };
 export default function HomeComponent({
   userCategories,
@@ -31,6 +33,7 @@ export default function HomeComponent({
   careerGurus,
   blogs,
   whyChooseUsCards,
+  heroAnimationIcons,
 }: Props) {
   const dispatch = useAppDispatch();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -141,7 +144,11 @@ export default function HomeComponent({
 
   return (
     <Fragment>
-      <HeroSection sentences={TYPEWRITER_SENTENCES} />
+      <HeroSection
+        sentences={TYPEWRITER_SENTENCES}
+        heroAnimationIcons={heroAnimationIcons}
+      />
+
       {/* first section | user categories */}
       <div className="w-full flex justify-center items-center relative lg:mt-10 top-[-7.5rem] lg:top-0">
         <div className="lg:px-20 px-6 flex flex-col items-center w-full max-w-[1440px]">
@@ -496,6 +503,8 @@ export default function HomeComponent({
           </div>
         </div>
       </section>
+
+      {/* dfdf */}
 
       {/* seventh section | testimonials */}
       <h1 className="text-xl font-bold text-center">TODO | Testimonials</h1>

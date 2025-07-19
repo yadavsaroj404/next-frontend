@@ -1,4 +1,5 @@
 import {
+  HeroAnimationIcon,
   ImpactNumber,
   UserCategory,
   WhyChooseUsCard,
@@ -116,5 +117,64 @@ export const whyChooseUsCards: WhyChooseUsCard[] = [
     title: "Deep Partnerships",
     description:
       "We collaborate with schools, colleges, universities & corporates to help their students & professionals",
+  },
+];
+
+export const heroAnimationIcons: HeroAnimationIcon[] = [
+  {
+    _id: "1",
+    name: "student",
+    alt: "Student icon",
+    title: "Career AI",
+    description: "Find suitable options",
+    role: "School Student",
+  },
+  {
+    _id: "2",
+    name: "college",
+    alt: "College building icon",
+    title: "Counselling AI",
+    description: "Get 1 to 1 sessions",
+    role: "UG/PG Student",
+  },
+  {
+    _id: "3",
+    name: "counsellor",
+    alt: "Counsellor icon",
+    title: "Counsellor AI",
+    description: "Choose the best experts",
+    role: "Professional",
+  },
+  {
+    _id: "4",
+    name: "pro",
+    alt: "Professional icon",
+    title: "Professional AI",
+    description: "Advance your career",
+    role: "Counsellor",
+  },
+  {
+    _id: "5",
+    name: "school",
+    alt: "School building icon",
+    title: "School AI",
+    description: "Support for students",
+    role: "School",
+  },
+  {
+    _id: "6",
+    name: "uni",
+    alt: "University cap icon",
+    title: "University AI",
+    description: "Guidance for higher education",
+    role: "University",
+  },
+  {
+    _id: "7",
+    name: "institute",
+    alt: "Institute logo",
+    title: "Institute AI",
+    description: "Tailored programs for you",
+    role: "Corporate",
   },
 ];

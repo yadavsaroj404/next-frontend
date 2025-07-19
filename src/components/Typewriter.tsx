@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useState, useEffect, useRef } from "react";
+import React, { FC, useState, useEffect } from "react";
 
 interface TypewriterProps {
   sentences?: string[];
@@ -18,63 +18,53 @@ const Typewriter: FC<TypewriterProps> = ({
   className = "",
 }) => {
   const [text, setText] = useState("");
-  const sentenceIndex = useRef(0);
-  const charIndex = useRef(0);
-  const isDeleting = useRef(false);
-  const timeoutRef = useRef<number>(0);
+  const [sentenceIndex, setSentenceIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Speed settings
-  const typingSpeed = 100;
-  const pauseBeforeDeleting = 1000;
-  const backSpaceSpeed = 25;
-  const delayBeforeNext = 300;
+  // timing constants (ms)
+  const TYPING_SPEED = 100;
+  const PAUSE_BEFORE_DELETE = 1000;
+  const DELETE_SPEED = 30;
+  const PAUSE_BEFORE_NEXT = 300;
 
   useEffect(() => {
-    function tick() {
-      const current = sentences[sentenceIndex.current];
-      if (!isDeleting.current) {
-        // typing
-        if (charIndex.current < current.length) {
-          setText((t) => t + current.charAt(charIndex.current));
-          charIndex.current += 1;
-          timeoutRef.current = window.setTimeout(tick, typingSpeed);
-        } else {
-          // pause then delete
-          isDeleting.current = true;
-          timeoutRef.current = window.setTimeout(tick, pauseBeforeDeleting);
-        }
-      } else {
-        // deleting
-        if (charIndex.current > 0) {
-          setText((t) => t.slice(0, -1));
-          charIndex.current -= 1;
-          timeoutRef.current = window.setTimeout(tick, backSpaceSpeed);
-        } else {
-          // move to next sentence
-          isDeleting.current = false;
-          sentenceIndex.current =
-            (sentenceIndex.current + 1) % sentences.length;
-          timeoutRef.current = window.setTimeout(tick, delayBeforeNext);
-        }
-      }
+    const fullText = sentences[sentenceIndex];
+    const charIndex = text.length;
+
+    let timeout: NodeJS.Timeout;
+    // Determine the next action & delay
+    if (!isDeleting && charIndex < fullText.length) {
+      // typing forward
+      timeout = setTimeout(() => {
+        setText(fullText.slice(0, charIndex + 1));
+      }, TYPING_SPEED);
+    } else if (!isDeleting && charIndex === fullText.length) {
+      // pause at full text, then start deleting
+      timeout = setTimeout(() => {
+        setIsDeleting(true);
+      }, PAUSE_BEFORE_DELETE);
+    } else if (isDeleting && charIndex > 0) {
+      // deleting
+      timeout = setTimeout(() => {
+        setText(fullText.slice(0, charIndex - 1));
+      }, DELETE_SPEED);
+    } else {
+      // finished deleting, move to next sentence
+      timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setSentenceIndex((idx) => (idx + 1) % sentences.length);
+      }, PAUSE_BEFORE_NEXT);
     }
 
-    // start
-    timeoutRef.current = window.setTimeout(tick, typingSpeed);
-
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [sentences]);
+    return () => clearTimeout(timeout);
+  }, [text, isDeleting, sentenceIndex, sentences]);
 
   return (
     <div className={className}>
       <p className="inline-block text-sm lg:text-2xl text-gray-400 font-semibold lg:font-bold overflow-hidden whitespace-nowrap">
         {text}
-        <span className="cursor text-3xl">|</span>
+        <span className="typewriter-cursor">|</span>
       </p>
-
-      {/* styled-jsx for blinking cursor */}
       <style jsx>{`
         @keyframes blink {
           0%,
@@ -85,7 +75,7 @@ const Typewriter: FC<TypewriterProps> = ({
             opacity: 1;
           }
         }
-        .cursor {
+        .typewriter-cursor {
           display: inline-block;
           margin-left: 2px;
           animation: blink 1s step-start infinite;

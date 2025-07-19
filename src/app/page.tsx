@@ -1,6 +1,13 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import HeroRing from "@/components/HeroRing";
 import HomeComponent from "@/components/pages/Home";
-import { ImpactNumbers, userCategories, whyChooseUsCards } from "@/data/utils";
+import {
+  heroAnimationIcons,
+  ImpactNumbers,
+  userCategories,
+  whyChooseUsCards,
+} from "@/data/utils";
 import { Fragment } from "react";
 
 async function fetchTestimonials() {
@@ -77,8 +84,10 @@ export default async function Home() {
         testimonials={testimonials}
         careerGurus={[]}
         blogs={[]}
+        heroAnimationIcons={heroAnimationIcons}
         whyChooseUsCards={whyChooseUsCards}
       />
+      <Footer />
     </Fragment>
   );
 }

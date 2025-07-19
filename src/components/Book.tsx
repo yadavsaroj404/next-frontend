@@ -82,7 +82,7 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({ onClose }) => {
           />
         </label>
 
-        <button
+        <button 
           type="submit"
           className="h-9 font-medium border border-white bg-[#00a79d] text-white rounded focus:outline-none hover:scale-105 transition-all"
         >
