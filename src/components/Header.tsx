@@ -23,7 +23,7 @@ const NAV_LINKS: NavLink[] = [
     subNavLinks: [
       {
         name: "Career Test",
-        url: "https://careernaksha.bhattaraishiva.com.np/formdetails",
+        url: "/formdetails",
       },
       {
         name: "O*NET Framework",
@@ -171,7 +171,7 @@ export default function Header() {
     <nav className={`${!isMobile && "flex space-x-4"}`}>
       {NAV_LINKS.map((link, i) => (
         <div key={i} className="relative group">
-          <button 
+          <button
             onClick={() => toggleIndex(i)}
             className={`
             flex items-baseline gap-x-1 justify-between
@@ -264,7 +264,7 @@ export default function Header() {
               height={32}
             />
           </Link>
-          <button  onClick={() => setMenuOpen((o) => !o)}>
+          <button onClick={() => setMenuOpen((o) => !o)}>
             <div className="space-y-1">
               <span className="block w-6 h-0.5 bg-black" />
               <span className="block w-6 h-0.5 bg-black" />
@@ -285,7 +285,7 @@ export default function Header() {
               >
                 {loggedIn ? "Dashboard" : "Login"}
               </Link>
-              <button 
+              <button
                 onClick={handleGetStarted}
                 className="px-4 py-2 font-semibold gradient-button rounded-full"
               >
@@ -312,7 +312,7 @@ export default function Header() {
           >
             {loggedIn ? "Dashboard" : "Login"}
           </Link>
-          <button 
+          <button
             onClick={handleGetStarted}
             className="px-5 py-2.5 gradient-button rounded-full"
           >

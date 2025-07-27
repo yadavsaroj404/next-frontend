@@ -6,22 +6,18 @@ input {
 }
 
 a {
-  color: #4281fd;
   text-decoration: none !important;
 }
 
 body {
   overflow-x: hidden;
+  font-family: var(--font-family-opensans);
 }
 
 /*Custom Scrollbar Design*/
 * {
   scrollbar-width: inherit !important;
   scrollbar-color: #4281fd #e0e0e0 !important;
-}
-
-body {
-  overflow-x: hidden;
 }
 
 ::selection {
@@ -230,9 +226,9 @@ body {
   }
 
   /* Global link color */
-  a {
+  /* a {
     color: var(--color-blueprimary);
-  }
+  } */
 }
 
 /* plugins */

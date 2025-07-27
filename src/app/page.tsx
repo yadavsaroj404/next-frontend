@@ -1,6 +1,3 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import HeroRing from "@/components/HeroRing";
 import HomeComponent from "@/components/pages/Home";
 import {
   heroAnimationIcons,
@@ -8,86 +5,102 @@ import {
   userCategories,
   whyChooseUsCards,
 } from "@/data/utils";
+import { BlogCard } from "@/interfaces/Blog";
+import { Counsellor } from "@/interfaces/Counsellor";
+import { Testimonial } from "@/interfaces/utils";
 import { Fragment } from "react";
 
-async function fetchTestimonials() {
-  // This function should fetch testimonials from an API or database
-  return [
-    {
-      _id: "1",
-      tm_detail:
-        "“CareerNaksha’s guidance literally transformed my future—I landed my dream job in tech!”",
-      Image: "https://i.pravatar.cc/48?img=1",
-      tm_name: "Alice Johnson",
-      tm_expertise: "Software Engineer",
-    },
-    {
-      _id: "2",
-      tm_detail:
-        "“The psychometric test opened my eyes to strengths I never knew I had. Highly recommended.”",
-      Image: "https://i.pravatar.cc/48?img=2",
-      tm_name: "Rahul Mehta",
-      tm_expertise: "Data Analyst",
-    },
-    {
-      _id: "3",
-      tm_detail:
-        "“The personalized counselling was spot‑on. I feel confident about my career path now.”",
-      Image: "https://i.pravatar.cc/48?img=3",
-      tm_name: "Maria Garcia",
-      tm_expertise: "Marketing Manager",
-    },
-    {
-      _id: "4",
-      tm_detail:
-        "“Money‑back guarantee gave me the courage to try—and I’m so glad I did!”",
-      Image: "https://i.pravatar.cc/48?img=4",
-      tm_name: "Liam Smith",
-      tm_expertise: "Student",
-    },
-    {
-      _id: "5",
-      tm_detail:
-        "“The V‑Coach is like having a mentor in your pocket. Love the instant support.”",
-      Image: "https://i.pravatar.cc/48?img=5",
-      tm_name: "Sophie Dubois",
-      tm_expertise: "Graphic Designer",
-    },
-  ];
-  // const url = "https://dashboard.careernaksha.com/testimonials";
+async function fetchTestimonials(): Promise<Testimonial[]> {
+  const url = "https://dashboard.careernaksha.com/testimonials";
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
 
-  // try {
-  //   const response = await fetch(url);
-  //   const data = await response.json();
+    const testimonials = data.map((testimonial: any) => ({
+      image: testimonial.Image,
+      link: testimonial.link || "#",
+      altText: testimonial.altText || "Testimonial image",
+      ...testimonial,
+    }));
 
-  //   const testimonials = data.map((testimonial: any) => ({
-  //     image: testimonial.Image,
-  //     link: testimonial.link || "#",
-  //     altText: testimonial.altText || "Testimonial image",
-  //     ...testimonial,
-  //   }));
-  //   return testimonials;
-  // } catch (error) {
-  //   console.error("Error fetching testimonials:", error);
-  //   return [];
-  // }
+    // add dummy rating, ideally this should be fetched from the API
+    testimonials.forEach((testimonial: Testimonial) => {
+      testimonial.tm_rating = testimonial.tm_rating || 5; // Default to 5 stars if not provided
+    });
+    return testimonials;
+  } catch (error) {
+    console.error("Error fetching testimonials:", error);
+    return [];
+  }
 }
+
+async function fetchCareerGurus(): Promise<any[]> {
+  const url = `${process.env.BACKEND_URL}/com/searchCounsellors?&city=vadodara&page=1&perPage=5`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    // add random reviews count and rating
+    data.forEach((guru: Counsellor) => {
+      guru.reviewsCount = Math.floor((guru.name.length / 3) * 10); // Random reviews count
+      guru.rating = 5;
+    });
+    return data;
+  } catch (error) {
+    console.error("Error fetching career gurus:", error);
+    return [];
+  }
+}
+
+async function fetchBlogs(): Promise<BlogCard[]> {
+  const url =
+    "https://dashboard.careernaksha.com/articles?_sort=_id:DESC&_limit=5";
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const blogs: BlogCard[] = data.map((blog: any) => {
+      const formattedBlog: BlogCard = {
+        _id: blog._id,
+        imgUrl: blog.imageURL,
+        author: blog.author,
+        date: new Date(blog.createdAt).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }),
+        title: blog.title,
+        blogUrl: blog.url,
+        summary: blog.summary,
+      };
+      return formattedBlog;
+    });
+
+    return blogs;
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    return [];
+  }
+}
+
 export default async function Home() {
-  const testimonials = await fetchTestimonials();
+  const [testimonials, careerGurus, blogs] = await Promise.all([
+    fetchTestimonials(),
+    fetchCareerGurus(),
+    fetchBlogs(),
+  ]);
 
   return (
     <Fragment>
-      <Header />
       <HomeComponent
         userCategories={userCategories}
         impactNumbers={ImpactNumbers}
         testimonials={testimonials}
-        careerGurus={[]}
-        blogs={[]}
+        careerGurus={careerGurus}
+        blogs={blogs}
         heroAnimationIcons={heroAnimationIcons}
         whyChooseUsCards={whyChooseUsCards}
       />
-      <Footer />
     </Fragment>
   );
 }

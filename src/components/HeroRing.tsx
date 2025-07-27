@@ -3,14 +3,16 @@ import { HeroAnimationIcon } from "@/interfaces/utils";
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 
-const STEP = 0.09;
+const STEP = 0.1;
 const PAUSE = 2000;
 const REWIND_DURATION = 500;
 
 export default function HeroRing({
   heroAnimationIcons,
+  className,
 }: {
   heroAnimationIcons: HeroAnimationIcon[];
+  className?: string;
 }) {
   // an array of refs for each dot element
   const dotsRef = useRef<HTMLDivElement[]>([]);
@@ -129,8 +131,8 @@ export default function HeroRing({
   }, []);
 
   return (
-    <div className="w-96">
-      <div className="relative w-96 h-96 border-3 border-dashed rounded-full border-blue-600">
+    <div className={`${className}`}>
+      <div className="relative w-80 h-80 border-3 border-dashed rounded-full border-blue-600">
         <div
           key={bottomIndex}
           className="absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-fade-slide"

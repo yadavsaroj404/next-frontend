@@ -1,8 +1,9 @@
 "use client";
-import { CounsellorInSearchResults } from "@/interfaces/Counsellor";
+import { Counsellor } from "@/interfaces/Counsellor";
 import {
   HeroAnimationIcon,
   ImpactNumber,
+  Testimonial,
   UserCategory,
   WhyChooseUsCard,
 } from "@/interfaces/utils";
@@ -16,13 +17,19 @@ import { useAppDispatch } from "@/hooks/useRedux";
 import RequestCallback from "../RequestCallback";
 import FAQs from "../FAQs";
 import HeroSection from "../HeroSection";
+import Carousel from "../Crousel";
+import StarIcon from "../Icons/Star";
+import DoubleQuotesIcon from "../Icons/DoubleQuotes";
+import CounsellorCard from "../CounsellorCard";
+import BlogCard from "../BlogCard";
+import { BlogCard as Blog } from "@/interfaces/Blog";
 
 type Props = {
   userCategories: UserCategory[];
   impactNumbers: ImpactNumber[];
-  testimonials: any[];
-  careerGurus: CounsellorInSearchResults[];
-  blogs: any[];
+  testimonials: Testimonial[];
+  careerGurus: Counsellor[];
+  blogs: Blog[];
   whyChooseUsCards: WhyChooseUsCard[];
   heroAnimationIcons: HeroAnimationIcon[];
 };
@@ -145,12 +152,13 @@ export default function HomeComponent({
   return (
     <Fragment>
       <HeroSection
+        className="w-full my-14"
         sentences={TYPEWRITER_SENTENCES}
         heroAnimationIcons={heroAnimationIcons}
       />
 
       {/* first section | user categories */}
-      <div className="w-full flex justify-center items-center relative lg:mt-10 top-[-7.5rem] lg:top-0">
+      <div className="w-full flex justify-center items-center lg:mt-10 lg:top-0">
         <div className="lg:px-20 px-6 flex flex-col items-center w-full max-w-[1440px]">
           <div className="text-smallheading font-bold lg:text-2xl lg:text-left text-center">
             Empower your career journey | Know your strengths | Achieve your
@@ -162,14 +170,12 @@ export default function HomeComponent({
             parents, professionals &amp; counsellors
           </div>
 
-          <div className="w-full grid lg:grid-cols-4 lg:grid-rows-1 max-w-5xl grid-rows-2 grid-cols-2 lg:px-0 pt-2">
+          <div className="w-full lg:w-3/4 lg:h-96 grid gap-x-5 gap-y-5 lg:grid-cols-4 lg:grid-rows-1 max-w-5xl grid-rows-2 grid-cols-1 sm:grid-cols-2 lg:px-0 pt-2">
             {userCategories.map((cat) => (
               <UserCategoryCard
+                className="cursor-pointer"
+                card={cat}
                 key={cat._id}
-                image={cat.image}
-                title={cat.title}
-                title2={cat.title2}
-                text={cat.text}
               />
             ))}
           </div>
@@ -177,7 +183,7 @@ export default function HomeComponent({
       </div>
 
       {/* second section | impact numbers */}
-      <div className="w-full flex justify-center items-center relative lg:mt-[5.5rem] mt-[-4.5rem]">
+      <div className="w-full flex justify-center items-center mt-10">
         <div className="w-full max-w-[1440px] flex flex-col gap-2 items-center lg:px-8 px-7">
           <div className="w-full flex flex-col gap-6 lg:gap-10 items-center">
             <div className="text-smallheading font-bold lg:text-2xl text-center">
@@ -277,13 +283,13 @@ export default function HomeComponent({
 
           <div className="flex flex-col relative w-full items-center lg:gap-8 gap-4">
             {/* Scrolling indicator */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 flex justify-center pointer-events-none">
+            <div className="absolute left-0 top-5 bottom-0 w-8 flex justify-center pointer-events-none">
               <Image
                 width={32}
                 height={32}
                 src="/assets/images/homepage/scrollingArrow.svg"
                 alt="Scroll indicator"
-                className="sticky top-[10%] z-20 lg:w-8 w-6 h-10 ml-1"
+                className="sticky top-40 z-20 lg:w-8 w-6 h-10 ml-1"
               />
               <div className="absolute inset-y-0 left-1/2 transform -translate-x-1/2 bg-smallheading w-[1px] rounded" />
             </div>
@@ -504,10 +510,107 @@ export default function HomeComponent({
         </div>
       </section>
 
-      {/* dfdf */}
-
       {/* seventh section | testimonials */}
-      <h1 className="text-xl font-bold text-center">TODO | Testimonials</h1>
+      <section
+        className="w-full flex flex-col items-center justify-center xl:px-16 px-8 mt-20 max-w-[1440px] mx-auto overflow-visible"
+        aria-labelledby="testimonials-heading"
+      >
+        <h2
+          id="testimonials-heading"
+          className="text-smallheading font-bold lg:text-2xl lg:text-left text-center"
+        >
+          Know how our customers express their love for us
+        </h2>
+        <h3 className="lg:text-4xl text-[22px] bg-clip-text bg-[length:200%_200%] bg-gradientbluelightblue animate-[getStartedAsBtnBg_15s_ease-in-out_infinite] text-transparent font-bold text-center lg:mt-8 mt-2">
+          Our success stories!
+        </h3>
+
+        <Carousel
+          cardsToShow={1}
+          responsive={{ sm: 1, md: 2, lg: 3, xl: 3 }}
+          gap={24}
+          loop={false}
+          showNavigation={false}
+          showIndicators={false}
+          // Removed unnecessary `flex justify-center items-center` from Carousel className
+          // as the Carousel component itself handles flex internally for its slides.
+          // It maintains `w-full rounded-2xl`
+          className="w-full rounded-2xl my-5"
+        >
+          {testimonials.map((testimonial) => (
+            // Directly render the testimonial card, removed the wrapper div
+            // The Carousel component's slide item handles its own sizing and flex-shrink
+            <article
+              key={testimonial._id}
+              className="border border-smallheading rounded-2xl px-6 py-8 gap-2 flex flex-col h-full mb-10" // mb-10 moved here
+              // Schema.org microdata for a single review
+              itemScope
+              itemType="https://schema.org/Review"
+            >
+              {/* Double Quotes Icon - ensure it's purely decorative for screen readers */}
+              <DoubleQuotesIcon />
+
+              {/* Testimonial detail - use itemProp="reviewBody" */}
+              <div
+                className="w-full text-sm line-clamp-4"
+                itemProp="reviewBody"
+              >
+                {testimonial.tm_detail}
+              </div>
+
+              <div className="flex w-full justify-between mt-2 h-max items-end flex-grow">
+                <div
+                  className="flex gap-3 items-center"
+                  itemScope
+                  itemType="https://schema.org/Author" // Author of the review
+                >
+                  <div className="avatar">
+                    <div className="w-12 rounded-full overflow-hidden">
+                      <Image
+                        src={testimonial.Image}
+                        alt={`Profile picture of ${testimonial.tm_name}`} // More descriptive alt
+                        width={48}
+                        height={48}
+                        itemProp="image"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="h-full flex flex-col justify-center">
+                    <span className="font-semibold text-sm" itemProp="name">
+                      {testimonial.tm_name}
+                    </span>
+                    <span className="text-sm" itemProp="jobTitle">
+                      {testimonial.tm_expertise}
+                    </span>
+                  </div>
+                </div>
+                <div
+                  className="flex gap-1 h-10 items-center"
+                  itemProp="reviewRating" // Rating of the review
+                  itemScope
+                  itemType="https://schema.org/Rating"
+                >
+                  <meta
+                    itemProp="ratingValue"
+                    content={testimonial.tm_rating.toString()}
+                  />
+                  <meta itemProp="bestRating" content="5" />
+                  {Array.from({ length: 5 }).map((_, starIndex) =>
+                    // Only render the number of stars based on tm_rating
+                    starIndex < testimonial.tm_rating ? (
+                      <StarIcon key={starIndex} />
+                    ) : (
+                      <StarIcon key={starIndex} fill="#aaa" />
+                    )
+                  )}
+                </div>
+              </div>
+              <meta itemProp="itemReviewed" content="CareerNaksha" />
+            </article>
+          ))}
+        </Carousel>
+      </section>
 
       {/* eighth section | partners */}
       <div className="w-full flex justify-center items-center">
@@ -698,10 +801,46 @@ export default function HomeComponent({
       </div>
 
       {/* ninth section | our counsellors */}
-      <h1 className="text-xl font-bold text-center">TODO | Our Counsellors</h1>
+      <section
+        className="w-full my-20 px-2 flex flex-col items-center" // Center overall section content
+        aria-labelledby="counsellors-heading" // Link to the main heading for accessibility
+      >
+        <h2
+          id="counsellors-heading" // ID to link with aria-labelledby
+          className="text-smallheading font-bold lg:text-2xl lg:text-left text-center"
+        >
+          Meet Our Counsellors
+        </h2>
+        {/* Secondary Heading, more descriptive */}
+        <h3 className="lg:text-4xl text-[22px] bg-clip-text bg-[length:200%_200%] bg-gradientbluelightblue animate-[getStartedAsBtnBg_15s_ease-in-out_infinite] text-transparent font-bold text-center lg:mt-6 mt-1">
+          Speak to the best career counsellor in India!
+        </h3>
+        {/* Descriptive Paragraph */}
+        <p className="text-center lg:text-left lg:text-base text-xs mt-2 mb-8">
+          Choose from the 5000+ Counsellors having multiple years of experience
+          to create your Career Roadmap to success.
+        </p>
+        {/* Carousel for Counsellor Cards */}
+        <Carousel
+          autoplay
+          autoplayInterval={3000} // Increased interval for better readability
+          loop
+          showNavigation={false}
+          showIndicators={true} // Consider showing indicators if navigation is hidden
+          cardsToShow={1}
+          className="w-full"
+          showControlsOnHover
+        >
+          {careerGurus.map((guru) => (
+            // Pass the counsellor data to the CounsellorCard component
+            // Ensure CounsellorCard is optimized as per previous steps
+            <CounsellorCard className="mb-5" counsellor={guru} key={guru._id} />
+          ))}
+        </Carousel>
+      </section>
 
       {/* tenth section | request callback */}
-      <div className="w-full flex justify-center items-center my-8">
+      <div className="w-full flex justify-center items-center">
         <div className="w-full xl:px-16 px-8 flex flex-col gap-4 py-14 max-w-[1440px] items-center overflow-visible">
           <div className="text-xl text-blueprimary font-bold text-center lg:text-left">
             Your first step from Career Confusion to Clarity!
@@ -715,19 +854,50 @@ export default function HomeComponent({
       </div>
 
       {/* 11th section | blogs section */}
-      <h1 className="text-xl font-bold text-center">TODO | Blogs Section</h1>
+      <div className="w-full flex justify-center items-center bg-bgcolors">
+        <div className="w-full xl:px-16 px-8 flex flex-col mt-8 max-w-[1440px]">
+          <div className="text-smallheading font-bold lg:text-xl text-center text-sm">
+            Stories of successful people in wide careers, their career journeys,
+            how they overcame failure and are among the top
+          </div>
+          <div className="lg:text-4xl text`-[22px] bg-clip-text bg-[length:200%_200%] bg-gradientbluelightblue animate-[getStartedAsBtnBg_15s_ease-in-out_infinite] text-transparent font-bold text-center lg:mt-10 mt-4">
+            Read about various careers & career related blogs
+          </div>
+          <Carousel
+            cardsToShow={1}
+            responsive={{ sm: 1, md: 2, lg: 3, xl: 3 }}
+            gap={24}
+            autoplayInterval={2000}
+            loop
+            autoplay
+            showNavigation={false}
+            showControlsOnHover
+            className="w-11/12 mx-auto"
+          >
+            {blogs.map((blog) => (
+              <BlogCard key={blog.date} blog={blog} />
+            ))}
+          </Carousel>
+          <div className="w-full flex justify-center">
+            <a
+              href="/blogs"
+              className="font-semibold px-5 py-2.5 gradient-button rounded-full before:rounded-full w-fit block mb-8"
+            >
+              Read more
+            </a>
+          </div>
+        </div>
+      </div>
 
       {/* 12th section | FAQs */}
       <FAQs />
 
-      <div className="w-full flex justify-center mb-8">
-        <div
-          className="font-semibold px-5 py-2.5 gradient-button rounded-full before:rounded-full w-fit hidden lg:block"
-          onClick={handleShowGetStartedClick}
-        >
-          Get Started As
-        </div>
-      </div>
+      <button
+        className="font-semibold px-5 py-2.5 gradient-button rounded-full before:rounded-full w-fit mx-auto block"
+        onClick={handleShowGetStartedClick}
+      >
+        Get Started As
+      </button>
     </Fragment>
   );
 }

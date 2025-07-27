@@ -10,5 +10,14 @@ interface Blog {
   author: string;
   authorInfo: string;
 }
+export interface BlogCard {
+  _id: string;
+  imgUrl: string;
+  author?: string;
+  date?: string;
+  title: string;
+  blogUrl: string;
+  summary: string;
+}
 
 export default Blog;

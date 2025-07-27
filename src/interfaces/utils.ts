@@ -28,3 +28,12 @@ export interface HeroAnimationIcon {
   description: string;
   role: string;
 }
+
+export interface Testimonial {
+  _id: string;
+  tm_detail: string;
+  Image: string; // URL to the image
+  tm_name: string;
+  tm_expertise: string;
+  tm_rating: number; // Assuming you'll pass a rating to display stars dynamically
+}

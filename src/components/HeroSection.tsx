@@ -3,73 +3,61 @@ import Image from "next/image";
 import RequestCallback from "./RequestCallback";
 import React from "react";
 import Typewriter from "./Typewriter";
-import HeroRing from "./HeroRing";
 import { HeroAnimationIcon } from "@/interfaces/utils";
+import HeroRing from "./HeroRing";
 
 interface HeroSectionProps {
   sentences: string[];
   heroAnimationIcons: HeroAnimationIcon[];
+  className?: string;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({
+export default function HeroSection({
   sentences,
   heroAnimationIcons,
-}) => {
+  className,
+}: HeroSectionProps) {
   return (
-    <>
-      <div className="w-full bg-no-repeat bg-[length:100vw_30rem] flex justify-center items-center lg:pt-0 pt-6 relative">
-        {/* Background SVG */}
-        <div className="w-full h-full absolute top-0 left-0">
-          <Image
-            src="/assets/images/homepage/heroSectionBg.svg"
-            alt="Careernaksha Hero section"
-            className="w-auto h-full"
-            fill
-            priority
-          />
-        </div>
-
-        <div className="flex lg:justify-between lg:px-12 flex-col lg:flex-row bg-center max-w-[1440px] w-full relative">
-          {/* Text & Mobile Animation */}
-          <div className="lg:py-20 pt-10 mt-10 lg:mt-1 xl:mt-0 px-6 lg:px-0 flex flex-col gap-6 w-full lg:w-1/2">
-            {/* Headings */}
-            <div className="flex flex-col gap-2">
-              <div className="text-smallheading font-bold lg:text-2xl lg:text-left text-center">
-                Bharat&apos;s Trusted & Affordable
-              </div>
-              <div className="text-2xl xl:text-5xl text-blueprimary font-bold leading-[2.5rem] xl:leading-[4rem] text-center lg:text-left">
-                Online – Offline Career Counselling & Guidance Platform
-              </div>
-              <div className="font-bold lg:text-2xl text-center lg:text-left">
-                Your Personal Career Counsellor
-              </div>
-            </div>
-
-            {/* Mobile-only animated icons/text */}
-
-            {/* Request callback + offer text */}
-            <div className="relative -top-[10.35rem] lg:top-0 flex flex-col gap-4">
-              <div className="w-full lg:w-[24rem] xl:w-[28rem] flex flex-col gap-4 px-4 lg:px-0 items-center">
-                <RequestCallback />
-              </div>
-              <div className="flex flex-col gap-2 pt-2">
-                <div className="text-[0.7rem] font-semibold pt-2 lg:pt-0 text-center lg:text-left">
-                  Get a FREE test worth ₹3,499 &amp; find your dream career
-                  INSTANTLY
-                </div>
-                <div className="hidden lg:block">
-                  <Typewriter sentences={sentences} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Desktop Animation */}
-        </div>
-        <HeroRing heroAnimationIcons={heroAnimationIcons} />
+    <div
+      className={`w-full max-w-7xl mx-auto place-items-center lg:place-items-start relative grid grid-rows-[min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[40rem_min-content] justify-center lg:justify-between ${className}`}
+    >
+      {/* Background SVG */}
+      <div className="w-full h-full absolute top-0 left-0">
+        <Image
+          src="/assets/images/homepage/heroSectionBg.svg"
+          alt="Careernaksha Hero section"
+          className="w-auto h-full"
+          fill
+          priority
+        />
       </div>
-    </>
-  );
-};
 
-export default HeroSection;
+      <div className="row-start-1 row-end-1">
+        <div className="text-smallheading font-bold lg:text-2xl lg:text-left text-center">
+          Bharat&apos;s Trusted & Affordable
+        </div>
+        <div className="text-2xl xl:text-5xl text-blueprimary opacity-90 font-bold leading-[2.5rem] xl:leading-[4rem] text-center lg:text-left">
+          Online – Offline Career Counselling & Guidance Platform
+        </div>
+        <div className="font-bold lg:text-2xl text-center lg:text-left">
+          Your Personal Career Counsellor
+        </div>
+      </div>
+
+      <HeroRing
+        className="mt-15 lg:mt-0 row-start-2 row-end-2 lg:row-start-1 lg:row-end-5"
+        heroAnimationIcons={heroAnimationIcons}
+      />
+      <RequestCallback className="mt-5 row-start-4 row-end-4 lg:row-start-2 lg:row-end-3" />
+
+      <div className="row-start-5 row-end-5 lg:row-start-3 lg:row-end-3 mt-2 mb-3 lg:mt-0 lg:mb-0 text-xs font-bold">
+        Get a FREE test worth ₹3,499 & find your dream career INSTANTLY
+      </div>
+
+      <Typewriter
+        className="row-start-3 row-end-3 lg:row-start-4 lg:row-end-5"
+        sentences={sentences}
+      />
+    </div>
+  );
+}

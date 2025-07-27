@@ -1,94 +1,68 @@
 "use client";
+
 import { useAppDispatch } from "@/hooks/useRedux";
+import { UserCategory } from "@/interfaces/utils";
 import { showGetStartedAs } from "@/store/layoutSlice";
 import Image from "next/image";
-import { Fragment } from "react";
 
 export default function UserCategoryCard({
-  image = "/assets/images/homepage/Sec2_1.png",
-  title,
-  title2,
-  text,
+  card,
+  className,
 }: {
-  image?: string;
-  title: string;
-  title2: string;
-  text: string;
+  card: UserCategory;
+  className?: string;
 }) {
   const dispatch = useAppDispatch();
+  const { image, title, title2, text } = card;
 
   const handleShowGetStartedAs = () => {
     dispatch(showGetStartedAs());
   };
 
   return (
-    <Fragment>
-      <div className="w-full lg:flex justify-center hidden">
-        <div
-          className="lg:w-[14rem] lg:h-[24rem] bg-white px-4 py-12 lg:py-16 hover:py-4 group rounded-lg 
-                   hover:bg-bgcolors border border-gray-200 shadow-lg transition-all duration-300 flex justify-start flex-col"
-        >
-          <div className="w-full justify-center flex">
-            <Image
-              src={image}
-              alt={`${title} ${title2}`}
-              width={152}
-              height={152}
-              className="w-[12rem] h-auto transition-all duration-300 group-hover:w-[8rem]"
-            />
-          </div>
-          <div className="w-full justify-center group-hover:mb-4 transition-all duration-300">
-            <div className="font-semibold text-center">{title}</div>
-            <div className="font-bold text-center">{title2}</div>
-          </div>
-          <div
-            className="h-0 opacity-0 group-hover:block group-hover:opacity-100 text-center 
-                     group-hover:h-auto transition-all duration-300 border-t-2 border-blueprimary pt-2 overflow-hidden"
-          >
-            {text}
-            <div className="w-full justify-center flex py-4">
-              <button
-                onClick={handleShowGetStartedAs}
-                className="px-6 py-2.5 font-semibold gradient-button rounded-full shadow-sm w-fit absolute bottom-6"
-              >
-                Get Started As
-              </button>
-            </div>
-          </div>
-        </div>
+    <article
+      className={`relative w-full h-full bg-white px-4 py-6 sm:py-8 lg:py-16 rounded-lg border border-gray-200 shadow-lg flex flex-col items-center text-center group overflow-hidden transition-all duration-300 hover:bg-bgcolors hover:shadow-xl lg:hover:py-4 ${className}`}
+      itemScope
+      itemType="https://schema.org/Service"
+    >
+      {/* Image Section */}
+      <div className="w-full flex justify-center mb-4 lg:mb-0">
+        <Image
+          src={image}
+          alt={`Illustration for ${title} ${title2} category`} // More descriptive alt text
+          width={152}
+          height={152}
+          className="w-24 h-auto lg:w-48 transition-all duration-300 group-hover:lg:w-32" // Responsive image size
+          itemProp="image"
+        />
       </div>
 
-      {/* Mobile / small screens */}
-      <div className="w-full lg:hidden justify-center flex p-2 h-full">
-        <div
-          className="flex flex-col rounded-md border border-blueprimary p-3 items-center 
-                   bg-white w-full h-full shadow-xl"
-        >
-          <div className="w-full justify-center flex">
-            <Image
-              src={image}
-              alt={`${title} ${title2}`}
-              width={96}
-              height={96}
-              className="w-[6rem] h-[6rem] transition-all duration-300"
-            />
-          </div>
-          <div className="font-semibold text-xs text-center">{title}</div>
-          <div className="font-bold text-xs text-center">{title2}</div>
-          <div className="h-[1.69px] bg-blueprimary w-full my-2" />
-          <div className="text-xs text-center">{text}</div>
-          <div className="h-full flex items-end">
-            <div className="w-full justify-center flex py-4">
-              <button
-                // onClick={handleShowGetStartedAs}
-                className="px-3 py-1.5 font-semibold gradient-button rounded-full shadow-sm w-fit text-[0.69rem]"
-              >
-                Get Started
-              </button>
-            </div>
-          </div>
+      {/* Titles Section */}
+      <div className="mb-4 lg:mb-0 transition-all duration-300 group-hover:lg:mb-4">
+        <h2 className="font-semibold text-base lg:text-lg" itemProp="name">
+          {title}
+        </h2>
+        <h3 className="font-bold text-sm lg:text-base">{title2}</h3>
+      </div>
+
+      {/* Text Description and Button (Expands on Hover for Large Screens) */}
+      <div
+        className="text-xs sm:text-sm text-center border-t-2 border-blueprimary pt-2 mt-2 overflow-hidden transition-all duration-300 max-h-full opacity-100 lg:max-h-0 lg:opacity-0 group-hover:lg:max-h-96 group-hover:lg:opacity-100"
+        itemProp="description"
+      >
+        {text}
+
+        {/* Button - repositioned for clarity and responsiveness */}
+        <div className="w-full flex justify-center py-4 lg:py-0 lg:absolute lg:bottom-6 lg:left-1/2 lg:-translate-x-1/2">
+          <button
+            onClick={handleShowGetStartedAs}
+            className="px-4 py-2 text-sm font-semibold gradient-button rounded-full shadow-sm w-fit" // Simplified button classes
+            aria-label={`Get Started as ${title} ${title2}`} // More specific accessibility label
+          >
+            Get Started As
+          </button>
         </div>
       </div>
-    </Fragment>
+    </article>
   );
 }
