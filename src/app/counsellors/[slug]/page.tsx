@@ -17,7 +17,7 @@ interface DayAvailability {
 }
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 // --- Utility Functions ---
@@ -63,7 +63,8 @@ const getCounsellorDetails = async (
 
 // --- SEO Metadata Generation (Runs on the Server) ---
 export async function generateMetadata({ params }: PageProps) {
-  const counsellor = await getCounsellorDetails(params.slug);
+  const { slug } = await params;
+  const counsellor = await getCounsellorDetails(slug);
 
   if (!counsellor) {
     return {
@@ -90,8 +91,8 @@ export async function generateMetadata({ params }: PageProps) {
 
 // --- Main Server Component (Initial Render) ---
 export default async function ({ params }: PageProps) {
-  params = await params;
-  const counsellor = await getCounsellorDetails(params.slug);
+  const { slug } = await params;
+  const counsellor = await getCounsellorDetails(slug);
 
   if (!counsellor) {
     notFound();
