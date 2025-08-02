@@ -1,14 +1,15 @@
+import { Fragment } from "react";
+import { fetchBlogCards } from "@/helpers/blog";
+import { Testimonial } from "@/interfaces/utils";
 import HomeComponent from "@/components/pages/Home";
+import { Counsellor } from "@/interfaces/Counsellor";
 import {
   heroAnimationIcons,
   ImpactNumbers,
   userCategories,
   whyChooseUsCards,
 } from "@/data/utils";
-import { BlogCard } from "@/interfaces/Blog";
-import { Counsellor } from "@/interfaces/Counsellor";
-import { Testimonial } from "@/interfaces/utils";
-import { Fragment } from "react";
+import { homepageFAQs } from "@/data/faq";
 
 async function fetchTestimonials(): Promise<Testimonial[]> {
   const url = "https://dashboard.careernaksha.com/testimonials";
@@ -35,7 +36,7 @@ async function fetchTestimonials(): Promise<Testimonial[]> {
 }
 
 async function fetchCareerGurus(): Promise<any[]> {
-  const url = `${process.env.BACKEND_URL}/com/searchCounsellors?&city=vadodara&page=1&perPage=5`;
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/com/searchCounsellors?&city=vadodara&page=1&perPage=5`;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -52,42 +53,11 @@ async function fetchCareerGurus(): Promise<any[]> {
   }
 }
 
-async function fetchBlogs(): Promise<BlogCard[]> {
-  const url =
-    "https://dashboard.careernaksha.com/articles?_sort=_id:DESC&_limit=5";
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    const blogs: BlogCard[] = data.map((blog: any) => {
-      const formattedBlog: BlogCard = {
-        _id: blog._id,
-        imgUrl: blog.imageURL,
-        author: blog.author,
-        date: new Date(blog.createdAt).toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        }),
-        title: blog.title,
-        blogUrl: blog.url,
-        summary: blog.summary,
-      };
-      return formattedBlog;
-    });
-
-    return blogs;
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
-    return [];
-  }
-}
-
 export default async function Home() {
   const [testimonials, careerGurus, blogs] = await Promise.all([
     fetchTestimonials(),
     fetchCareerGurus(),
-    fetchBlogs(),
+    fetchBlogCards(),
   ]);
 
   return (
@@ -98,6 +68,7 @@ export default async function Home() {
         testimonials={testimonials}
         careerGurus={careerGurus}
         blogs={blogs}
+        FAQs={homepageFAQs}
         heroAnimationIcons={heroAnimationIcons}
         whyChooseUsCards={whyChooseUsCards}
       />

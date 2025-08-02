@@ -1,6 +1,6 @@
 import { FAQ } from "@/interfaces/faqs";
 
-export const defaultFAQ: FAQ[] = [
+export const homepageFAQs: FAQ[] = [
   {
     question: "About 'CareerNaksha'",
     answer: `‘CareerNaksha’ is an ed-tech startup based out of Vadodara,

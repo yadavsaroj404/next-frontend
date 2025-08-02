@@ -24,6 +24,21 @@ const nextConfig: NextConfig = {
         hostname: "dashboard.careernaksha.com",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "connect-assets.prosple.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "image-static.collegedunia.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "newwayuk.com.ng",
+        pathname: "**",
+      },
     ],
   },
 };

@@ -181,7 +181,7 @@ export default function CounsellorCard({
             {counsellor.degrees.join(" | ")}
           </h2>
           <p
-            className="m-0 mr-1 text-sm lg:w-full text-center md:text-left max-h-20 overflow-hidden"
+            className="m-0 mr-1  text-sm w-full text-center md:text-left max-h-20 overflow-hidden"
             itemProp="description"
           >
             {counsellor.about}
@@ -211,7 +211,6 @@ export default function CounsellorCard({
           </div>
           <div className="text-xs mt-2">
             <span className="block md:inline" itemProp="experienceIn">
-              {" "}
               {/* Custom or more specific Schema.org */}
               Experience: {counsellor.experience || 0} years
             </span>

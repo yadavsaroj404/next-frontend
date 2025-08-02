@@ -11,10 +11,6 @@ const AVAILABLE_GRADES = [
   "UG/PG",
   "Working Professional",
 ];
-type PricingPlan =
-  | "Free Psychometric Test"
-  | "Paid Psychometric Test"
-  | "Paid Psychometric Test w/ Counselling";
 
 interface Props {
   plan: string;

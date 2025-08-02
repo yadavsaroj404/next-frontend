@@ -11,6 +11,8 @@ export interface CounsellorInSearchResults {
   experience: number;
   totalSessions: number;
   availability?: number;
+  reviewsCount: number;
+  rating: number;
   dayAvailability: Array<{
     available: boolean;
     day: string;

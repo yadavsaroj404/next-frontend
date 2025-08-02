@@ -15,14 +15,14 @@ import Link from "next/link";
 import { showGetStartedAs } from "@/store/layoutSlice";
 import { useAppDispatch } from "@/hooks/useRedux";
 import RequestCallback from "../RequestCallback";
-import FAQs from "../FAQs";
+import FAQComponent from "../FAQs";
 import HeroSection from "../HeroSection";
 import Carousel from "../Crousel";
-import StarIcon from "../Icons/Star";
-import DoubleQuotesIcon from "../Icons/DoubleQuotes";
 import CounsellorCard from "../CounsellorCard";
 import BlogCard from "../BlogCard";
 import { BlogCard as Blog } from "@/interfaces/Blog";
+import Testimonials from "../Testimonials";
+import { FAQ } from "@/interfaces/faqs";
 
 type Props = {
   userCategories: UserCategory[];
@@ -32,7 +32,9 @@ type Props = {
   blogs: Blog[];
   whyChooseUsCards: WhyChooseUsCard[];
   heroAnimationIcons: HeroAnimationIcon[];
+  FAQs: FAQ[];
 };
+
 export default function HomeComponent({
   userCategories,
   impactNumbers,
@@ -41,6 +43,7 @@ export default function HomeComponent({
   blogs,
   whyChooseUsCards,
   heroAnimationIcons,
+  FAQs,
 }: Props) {
   const dispatch = useAppDispatch();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -512,7 +515,7 @@ export default function HomeComponent({
 
       {/* seventh section | testimonials */}
       <section
-        className="w-full flex flex-col items-center justify-center xl:px-16 px-8 mt-20 max-w-[1440px] mx-auto overflow-visible"
+        className="w-full flex flex-col items-center justify-center xl:px-16 px-8 mt-20 mx-auto"
         aria-labelledby="testimonials-heading"
       >
         <h2
@@ -524,92 +527,16 @@ export default function HomeComponent({
         <h3 className="lg:text-4xl text-[22px] bg-clip-text bg-[length:200%_200%] bg-gradientbluelightblue animate-[getStartedAsBtnBg_15s_ease-in-out_infinite] text-transparent font-bold text-center lg:mt-8 mt-2">
           Our success stories!
         </h3>
-
-        <Carousel
+        <Testimonials
+          testimonials={testimonials}
           cardsToShow={1}
           responsive={{ sm: 1, md: 2, lg: 3, xl: 3 }}
           gap={24}
           loop={false}
           showNavigation={false}
           showIndicators={false}
-          // Removed unnecessary `flex justify-center items-center` from Carousel className
-          // as the Carousel component itself handles flex internally for its slides.
-          // It maintains `w-full rounded-2xl`
           className="w-full rounded-2xl my-5"
-        >
-          {testimonials.map((testimonial) => (
-            // Directly render the testimonial card, removed the wrapper div
-            // The Carousel component's slide item handles its own sizing and flex-shrink
-            <article
-              key={testimonial._id}
-              className="border border-smallheading rounded-2xl px-6 py-8 gap-2 flex flex-col h-full mb-10" // mb-10 moved here
-              // Schema.org microdata for a single review
-              itemScope
-              itemType="https://schema.org/Review"
-            >
-              {/* Double Quotes Icon - ensure it's purely decorative for screen readers */}
-              <DoubleQuotesIcon />
-
-              {/* Testimonial detail - use itemProp="reviewBody" */}
-              <div
-                className="w-full text-sm line-clamp-4"
-                itemProp="reviewBody"
-              >
-                {testimonial.tm_detail}
-              </div>
-
-              <div className="flex w-full justify-between mt-2 h-max items-end flex-grow">
-                <div
-                  className="flex gap-3 items-center"
-                  itemScope
-                  itemType="https://schema.org/Author" // Author of the review
-                >
-                  <div className="avatar">
-                    <div className="w-12 rounded-full overflow-hidden">
-                      <Image
-                        src={testimonial.Image}
-                        alt={`Profile picture of ${testimonial.tm_name}`} // More descriptive alt
-                        width={48}
-                        height={48}
-                        itemProp="image"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="h-full flex flex-col justify-center">
-                    <span className="font-semibold text-sm" itemProp="name">
-                      {testimonial.tm_name}
-                    </span>
-                    <span className="text-sm" itemProp="jobTitle">
-                      {testimonial.tm_expertise}
-                    </span>
-                  </div>
-                </div>
-                <div
-                  className="flex gap-1 h-10 items-center"
-                  itemProp="reviewRating" // Rating of the review
-                  itemScope
-                  itemType="https://schema.org/Rating"
-                >
-                  <meta
-                    itemProp="ratingValue"
-                    content={testimonial.tm_rating.toString()}
-                  />
-                  <meta itemProp="bestRating" content="5" />
-                  {Array.from({ length: 5 }).map((_, starIndex) =>
-                    // Only render the number of stars based on tm_rating
-                    starIndex < testimonial.tm_rating ? (
-                      <StarIcon key={starIndex} />
-                    ) : (
-                      <StarIcon key={starIndex} fill="#aaa" />
-                    )
-                  )}
-                </div>
-              </div>
-              <meta itemProp="itemReviewed" content="CareerNaksha" />
-            </article>
-          ))}
-        </Carousel>
+        />
       </section>
 
       {/* eighth section | partners */}
@@ -854,43 +781,54 @@ export default function HomeComponent({
       </div>
 
       {/* 11th section | blogs section */}
-      <div className="w-full flex justify-center items-center bg-bgcolors">
-        <div className="w-full xl:px-16 px-8 flex flex-col mt-8 max-w-[1440px]">
-          <div className="text-smallheading font-bold lg:text-xl text-center text-sm">
-            Stories of successful people in wide careers, their career journeys,
-            how they overcame failure and are among the top
-          </div>
-          <div className="lg:text-4xl text`-[22px] bg-clip-text bg-[length:200%_200%] bg-gradientbluelightblue animate-[getStartedAsBtnBg_15s_ease-in-out_infinite] text-transparent font-bold text-center lg:mt-10 mt-4">
-            Read about various careers & career related blogs
-          </div>
-          <Carousel
-            cardsToShow={1}
-            responsive={{ sm: 1, md: 2, lg: 3, xl: 3 }}
-            gap={24}
-            autoplayInterval={2000}
-            loop
-            autoplay
-            showNavigation={false}
-            showControlsOnHover
-            className="w-11/12 mx-auto"
+      <section
+        className="w-full bg-bgcolors py-4 px-10"
+        aria-labelledby="career-blogs-heading"
+      >
+        <p className="text-smallheading font-bold lg:text-xl text-center text-sm mb-4">
+          Stories of successful people in wide careers, their career journeys,
+          how they overcame failure and are among the top.
+        </p>
+
+        <h2
+          id="career-blogs-heading"
+          className="lg:text-4xl text-[22px] bg-clip-text bg-[length:200%_200%] bg-gradientbluelightblue animate-[getStartedAsBtnBg_15s_ease-in-out_infinite] text-transparent font-bold text-center lg:mt-10 mt-4"
+        >
+          Read about various careers & career related blogs
+        </h2>
+        <Carousel
+          cardsToShow={1}
+          responsive={{ sm: 1, md: 2, lg: 3, xl: 3 }}
+          gap={24}
+          autoplayInterval={2000}
+          loop
+          autoplay
+          showNavigation={false}
+          showControlsOnHover
+          className="w-9/12 mx-auto my-8"
+        >
+          {blogs.map((blog) => (
+            <BlogCard key={blog.date} blog={blog} />
+          ))}
+        </Carousel>
+        <div className="w-full flex justify-center">
+          <Link
+            href="/blogs"
+            className="font-semibold px-5 py-2.5 gradient-button rounded-full before:rounded-full w-fit block mb-8"
+            aria-label="View all career-related blogs"
           >
-            {blogs.map((blog) => (
-              <BlogCard key={blog.date} blog={blog} />
-            ))}
-          </Carousel>
-          <div className="w-full flex justify-center">
-            <a
-              href="/blogs"
-              className="font-semibold px-5 py-2.5 gradient-button rounded-full before:rounded-full w-fit block mb-8"
-            >
-              Read more
-            </a>
-          </div>
+            Read more
+          </Link>
         </div>
-      </div>
+      </section>
 
       {/* 12th section | FAQs */}
-      <FAQs />
+      <FAQComponent
+        title="What is CareerNaksha, Career Counselling, Psychometric Assessment,
+          Career Guidance, How are our Counsellors better? You may ask?"
+        subtitle="FAQs - General questions and queries answered for you"
+        faqs={FAQs}
+      />
 
       <button
         className="font-semibold px-5 py-2.5 gradient-button rounded-full before:rounded-full w-fit mx-auto block"

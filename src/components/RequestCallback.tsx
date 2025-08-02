@@ -60,6 +60,7 @@ export default function RequestCallback({ className }: { className?: string }) {
         <TelephoneInput
           value={phone}
           onChangeNumber={(value, valid) => {
+            console.log("Phone number changed:", value, valid);
             setPhone(value);
             setIsValid(valid);
           }}

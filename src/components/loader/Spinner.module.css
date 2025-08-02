@@ -1,0 +1,85 @@
+.container {
+  margin-top: 5em;
+}
+
+.small {
+  font-size: 0.6em;
+}
+
+.credits {
+  margin-top: 25px;
+}
+
+.center {
+  text-align: center;
+}
+
+.loader {
+  position: relative;
+  margin: 0 auto;
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0.8em;
+  color: red;
+  animation: color 6.4s infinite step-end;
+}
+
+.mask {
+  position: absolute;
+  width: 2.5em;
+  height: 5em;
+  background-color: #fff;
+  left: 2.5em;
+  transform-origin: 0em 2.5em;
+  animation: spin 1.6s ease-out infinite;
+}
+
+.mask2 {
+  position: absolute;
+  width: 2.5em;
+  height: 5em;
+  background-color: #fff;
+  left: 0em;
+  transform-origin: 2.5em 2.5em;
+  animation: spinNoDelay 1.6s infinite 0.2s;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50%,
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinNoDelay {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(353deg);
+  }
+}
+
+@keyframes color {
+  0% {
+    color: #3cba54;
+  }
+
+  25% {
+    color: #f4c20d;
+  }
+
+  50% {
+    color: #db3236;
+  }
+
+  75% {
+    color: #4885ed;
+  }
+}

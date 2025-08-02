@@ -13,8 +13,6 @@ interface ResponsiveConfig {
   lg?: number;
   xl?: number;
 }
-
-// Define the props interface for the Carousel component
 interface CarouselProps {
   children: React.ReactNode;
   className?: string;
@@ -350,7 +348,6 @@ export default function Carousel({
       <div
         ref={carouselRef}
         className={`flex transition-transform duration-500 ease-in-out items-center`}
-        // Apply the gap directly to the flex container
         style={{ gap: `${gap}px` }}
       >
         {slides.map((slide, index) => (
@@ -358,7 +355,6 @@ export default function Carousel({
             key={index}
             className={`flex-shrink-0`}
             style={{
-              // Use calc() to subtract the proportion of gap from 100% per currentCardsToShow
               width: `calc((100% - ${
                 (currentCardsToShow - 1) * gap
               }px) / ${currentCardsToShow})`,

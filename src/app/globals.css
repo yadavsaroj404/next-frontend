@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /* override */
-input {
+/* input {
   background-color: white;
-}
+} */
 
 a {
   text-decoration: none !important;
@@ -232,6 +232,14 @@ body {
 }
 
 /* plugins */
-@plugin "daisyui" {
+/* @plugin "daisyui" {
   themes: light --default;
+} */
+
+/* custom classes */
+.justified {
+  text-align: justify;
+  text-align-last: center;
+  -moz-text-align-last: center;
+  -webkit-text-align-last: center;
 }

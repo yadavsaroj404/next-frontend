@@ -1,10 +1,19 @@
 "use client";
-import { defaultFAQ } from "@/data/faq";
 import { FAQ } from "@/interfaces/faqs";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-export default function FAQs({ faqs = defaultFAQ }: { faqs?: FAQ[] }) {
+export default function FAQs({
+  title,
+  subtitle,
+  faqs,
+  bannerImage = "/assets/images/homepage/faq.svg",
+}: {
+  title: string;
+  subtitle: string;
+  faqs: FAQ[];
+  bannerImage?: string;
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   // keep refs to answer containers for height animation
   const contentRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -32,18 +41,17 @@ export default function FAQs({ faqs = defaultFAQ }: { faqs?: FAQ[] }) {
     <section className="w-full flex justify-center items-center my-8">
       <div className="w-full xl:px-16 px-8 flex flex-col gap-4 mt-20 max-w-[1440px] items-center">
         <div className="text-smallheading font-bold lg:text-lg text-center text-sm">
-          What is CareerNaksha, Career Counselling, Psychometric Assessment,
-          Career Guidance, How are our Counsellors better? You may ask?
+          {title}
         </div>
         <h4 className="lg:text-4xl text-[22px] bg-clip-text bg-gradientbluelightblue animate-[getStartedAsBtnBg_15s_ease-in-out_infinite] text-transparent font-bold text-center lg:mt-6 mt-4">
-          FAQs - General questions and queries answered for you
+          {subtitle}
         </h4>
 
         <div className="flex w-full mt-8 flex-col lg:flex-row gap-8 items-start">
           {/* Left image */}
           <div className="lg:w-1/2 w-full flex justify-center">
             <Image
-              src="/assets/images/homepage/faq.svg"
+              src={bannerImage}
               width={400}
               height={400}
               alt="FAQ!"
@@ -57,7 +65,7 @@ export default function FAQs({ faqs = defaultFAQ }: { faqs?: FAQ[] }) {
               <div key={idx} className="rounded-md overflow-hidden">
                 <button
                   onClick={() => toggle(idx)}
-                  className="w-full flex justify-between items-center px-4 py-3 bg-bgcolors"
+                  className="w-full flex justify-between items-center px-4 py-3 bg-bgcolors cursor-pointer"
                   aria-expanded={openIndex === idx}
                 >
                   <span className="text-lg lg:text-xl font-semibold text-left">

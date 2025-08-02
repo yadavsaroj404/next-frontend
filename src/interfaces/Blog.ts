@@ -1,5 +1,5 @@
 interface Blog {
-  id: string;
+  _id: string;
   title: string;
   url: string;
   matadata: string;
@@ -9,6 +9,7 @@ interface Blog {
   keywords: string;
   author: string;
   authorInfo: string;
+  createdAt: string;
 }
 export interface BlogCard {
   _id: string;

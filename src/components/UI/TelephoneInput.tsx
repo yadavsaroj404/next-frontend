@@ -1,8 +1,7 @@
-// components/TelephoneInput.tsx
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import "intl-tel-input/styles";
 
 // Dynamically import the React adapter *only* on the client
@@ -11,29 +10,34 @@ const IntlTelInput = dynamic(
     const mod = await import("intl-tel-input/reactWithUtils");
     return mod.default;
   },
-  { ssr: false }
+  { ssr: false, loading: () => <div>Loading...</div> }
 );
 
 interface TelephoneInputProps {
   onChangeNumber?: (value: string, isValid: boolean) => void;
+  className?: string;
   value?: string;
 }
 
-const TelephoneInput: FC<TelephoneInputProps> = ({ onChangeNumber, value }) => {
-  const [number, setNumber] = useState(value || "");
-  const [isValid, setIsValid] = useState(false);
-
+export default function TelephoneInput({
+  onChangeNumber,
+  className = "",
+  value = "",
+}: TelephoneInputProps) {
+  const [valid, setValid] = useState(false);
+  const [number, setNumber] = useState(value);
+  
   return (
-    <div className="relative w-full">
+    <div className={`relative w-full ${className}`}>
       <IntlTelInput
-        initialValue={number}
+        initialValue={value}
         onChangeNumber={(num: string) => {
           setNumber(num);
-          onChangeNumber?.(num, isValid);
+          onChangeNumber?.(num, valid);
         }}
-        onChangeValidity={(valid: boolean) => {
-          setIsValid(valid);
-          onChangeNumber?.(number, valid);
+        onChangeValidity={(v: boolean) => {
+          setValid(v);
+          onChangeNumber?.(number, v);
         }}
         initOptions={{
           initialCountry: "IN",
@@ -51,6 +55,4 @@ const TelephoneInput: FC<TelephoneInputProps> = ({ onChangeNumber, value }) => {
       />
     </div>
   );
-};
-
-export default TelephoneInput;
+}

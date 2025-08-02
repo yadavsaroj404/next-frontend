@@ -200,7 +200,7 @@ export default function Header() {
             <ul
               className={`
               absolute z-30 bg-white rounded-lg shadow-lg mt-2 ${
-                isMobile ? "w-full p-4" : "min-w-[12rem] p-2"
+                isMobile ? "w-full p-4" : "w-max p-2"
               }
             `}
             >
