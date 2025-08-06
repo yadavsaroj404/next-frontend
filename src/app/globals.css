@@ -243,3 +243,26 @@ body {
   -moz-text-align-last: center;
   -webkit-text-align-last: center;
 }
+
+/* cta button with pulse animation effect */
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.05);
+  }
+}
+
+.pulseCTA {
+  @apply inline-block bg-blueprimary hover:bg-blue-700 text-white font-bold py-3 px-6 sm:px-8 rounded-full transition duration-300 text-base sm:text-lg w-full sm:w-auto;
+  animation: pulse-slow 3s ease-in-out infinite;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.pulseCTA:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}

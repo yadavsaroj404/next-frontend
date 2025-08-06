@@ -1,4 +1,3 @@
-"use client";
 import { Counsellor } from "@/interfaces/Counsellor";
 import {
   HeroAnimationIcon,
@@ -7,13 +6,11 @@ import {
   UserCategory,
   WhyChooseUsCard,
 } from "@/interfaces/utils";
-import React, { Fragment, useEffect, useState } from "react";
-import UserCategoryCard from "../UserCategoryCard";
-import ImpactNumberCard from "../ImpactNumberCard";
+import React, { Fragment } from "react";
+import UserCategoryCard from "@/components/UserCategoryCard";
+import ImpactNumberCard from "@/components/ImpactNumberCard";
 import Image from "next/image";
 import Link from "next/link";
-import { showGetStartedAs } from "@/store/layoutSlice";
-import { useAppDispatch } from "@/hooks/useRedux";
 import RequestCallback from "../RequestCallback";
 import FAQComponent from "../FAQs";
 import HeroSection from "../HeroSection";
@@ -45,8 +42,9 @@ export default function HomeComponent({
   heroAnimationIcons,
   FAQs,
 }: Props) {
-  const dispatch = useAppDispatch();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  // const dispatch = useAppDispatch();
+  // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const isLoggedIn = false;
   interface Step {
     id: number;
     title: string;
@@ -139,18 +137,18 @@ export default function HomeComponent({
   ];
 
   const handleShowGetStartedClick = () => {
-    dispatch(showGetStartedAs());
+    // dispatch(showGetStartedAs());
   };
 
-  useEffect(() => {
-    // Check if user is logged in
-    const userId = localStorage.getItem("user_id");
-    if (userId) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Check if user is logged in
+  //   const userId = localStorage.getItem("user_id");
+  //   if (userId) {
+  //     setIsLoggedIn(true);
+  //   } else {
+  //     setIsLoggedIn(false);
+  //   }
+  // }, []);
 
   return (
     <Fragment>

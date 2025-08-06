@@ -1,16 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import TelephoneInput from "./UI/TelephoneInput";
+import TelephoneInputWithButton from "./TelephoneInputWithButton";
 
 const backendServer = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-export default function RequestCallback({ className }: { className?: string }) {
-  // state for phone & validity
-  const [phone, setPhone] = useState("");
-  const [isValid, setIsValid] = useState(false);
-
-  const requestCallback = async () => {
+interface RequestCallbackProps {
+  className?: string;
+  buttonText?: string;
+  onRequest?: (phone: string) => void;
+}
+export default function RequestCallback({
+  className,
+  buttonText = "Talk to an Expert",
+  onRequest,
+}: RequestCallbackProps) {
+  const requestCallback = async (phone: string, isValid: boolean) => {
     if (!isValid || phone.length < 10) return;
 
     try {
@@ -19,10 +23,6 @@ export default function RequestCallback({ className }: { className?: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mobile: phone }),
       });
-
-      // reset input on submit
-      setPhone("");
-      setIsValid(false);
 
       // if (res.status === 200) {
       //   setAlert({
@@ -42,9 +42,6 @@ export default function RequestCallback({ className }: { className?: string }) {
       // }
     } catch (err) {
       console.error(err);
-      // telRef.current?.reset();
-      setPhone("");
-      setIsValid(false);
       // setAlert({ message: "Network error. Please try again.", type: "error" });
     }
 
@@ -53,27 +50,9 @@ export default function RequestCallback({ className }: { className?: string }) {
   };
 
   return (
-    <div
-      className={`flex justify-center lg:justify-start gap-4 flex-col lg:flex-row ${className}`}
-    >
-      <div className="relative items-center flex">
-        <TelephoneInput
-          value={phone}
-          onChangeNumber={(value, valid) => {
-            console.log("Phone number changed:", value, valid);
-            setPhone(value);
-            setIsValid(valid);
-          }}
-        />
-      </div>
-
-      <button
-        onClick={requestCallback}
-        disabled={!isValid}
-        className="py-3 px-4 gradient-button rounded-lg before:rounded-lg font-semibold text-center lg:text-left"
-      >
-        Talk to an Expert
-      </button>
-    </div>
+    <TelephoneInputWithButton
+      onRequest={requestCallback}
+      buttonText="Talk to an Expert"
+    />
   );
 }
